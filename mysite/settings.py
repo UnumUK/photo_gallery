@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'sortedm2m',
     'django.contrib.sites',
     'taggit',
+    'shuttabug',
 
 ]
 
