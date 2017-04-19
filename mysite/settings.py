@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from photologue import PHOTOLOGUE_APP_DIR
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'photologue',
     'sortedm2m',
     'django.contrib.sites',
+    'taggit',
 
 ]
 
@@ -54,12 +56,17 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mysite.urls'
+#TEMPLATE_DIRS = [os.path.join(BASE_DIR,'templates'),PHOTOLOGUE_APP_DIR]
+#This keep generating an error until i moved it to templates
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        # note: if you set APP_DIRS to True, you won't need to add 'loaders' under OPTIONS
+        # proceeding as if APP_DIRS is False
+        'APP_DIRS': False,
+        'TEMPLATE_DIRS': (os.path.join(BASE_DIR,'templates'),PHOTOLOGUE_APP_DIR),
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -67,6 +74,12 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            # start  - please add only if APP_DIRS is False
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+                ],
+            # end - please add only if APP_DIRS is False
         },
     },
 ]
