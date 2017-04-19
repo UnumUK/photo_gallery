@@ -18,5 +18,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^photologue/',include('photologue.urls',namespace='photologue')),
+    #overrides default photologue url match.
+    url(r'^photologue/', include('shuttabug.urls',namespace='shuttabug')),
+    #url(r'^photologue/',include('photologue.urls',namespace='photologue')),
+    url(r'^shuttabug/', include('shuttabug.urls',namespace='shuttabug')),
 ]

@@ -63,7 +63,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),PHOTOLOGUE_APP_DIR],
+        'DIRS': ( os.path.join(BASE_DIR, 'templates'),PHOTOLOGUE_APP_DIR),
         # note: if you set APP_DIRS to True, you won't need to add 'loaders' under OPTIONS
         # proceeding as if APP_DIRS is False
         'APP_DIRS': False,
