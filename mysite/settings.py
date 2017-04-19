@@ -57,16 +57,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'mysite.urls'
 #TEMPLATE_DIRS = [os.path.join(BASE_DIR,'templates'),PHOTOLOGUE_APP_DIR]
-#This keep generating an error until i moved it to templates
+#This keep generating an error until i moved it to templates, 'DIRS'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),PHOTOLOGUE_APP_DIR],
         # note: if you set APP_DIRS to True, you won't need to add 'loaders' under OPTIONS
         # proceeding as if APP_DIRS is False
         'APP_DIRS': False,
-        'TEMPLATE_DIRS': (os.path.join(BASE_DIR,'templates'),PHOTOLOGUE_APP_DIR),
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
