@@ -14,12 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
+from . import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     #overrides default photologue url match.
     url(r'^photologue/', include('shuttabug.urls',namespace='shuttabug')),
-    #url(r'^photologue/',include('photologue.urls',namespace='photologue')),
+    url(r'^photologue/',include('photologue.urls',namespace='photologue')),
     url(r'^shuttabug/', include('shuttabug.urls',namespace='shuttabug')),
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

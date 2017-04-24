@@ -1,0 +1,6 @@
+/* TESTING */
+{% load static %}
+div.row img.thumbnail {
+	margin-bottom: 50px;
+	display: inline-block;
+}

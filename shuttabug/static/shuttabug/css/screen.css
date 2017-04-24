@@ -1,0 +1,37 @@
+/* Some customisation for the Photologue demo site. */
+
+
+div.row img.thumbnail {
+	margin-bottom: 5px;
+	display: inline-block;
+}
+
+.page-header {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+td {
+	width: 100px;
+}
+
+a.btn.btn-default {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+li a {
+    color: green;
+}
+
+body {
+    background: white url('../images/polar-bear-hero.jpg')
+    no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+/* css and image files are both static file types and tend to be stored together under
+static, hence relative referencing is okay. django doc says static files like css can't use django tags.
+because these aren't django generated*/
+}
