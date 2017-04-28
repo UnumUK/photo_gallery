@@ -38,7 +38,7 @@ def search(request):
                 userMessage = "Your search has returned %s result" % len(results)
         else:
             results=Photo.objects.none()
-            userMessage="You didn’t enter any search criteria. Please enter some terms." # or choose a category."
+            userMessage="You didn’t enter any search criteria. Please enter some term" # or choose a category."
 
     else:
         results=Photo.objects.none()
