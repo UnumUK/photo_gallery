@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from photologue.views import GalleryListView
 from photologue.models import Photo, Gallery # use extended Gallery model later.
 
+from .forms import SearchForm
+
 # Create your views here.
 def index(request):
     context= {'stuff':"Hello World. You are looking are Shuttabug index."}
@@ -22,3 +24,28 @@ class myGalleryListView(GalleryListView):
 def news(request):
     context= {'stuff':"Hello World. You are looking are Shuttabug index."}
     return render(request,'shuttabug/news.html', context)
+
+
+
+def search(request):
+    form = SearchForm(request.GET or {})
+    if request.method == 'GET' and 'q' in request.GET:
+        q=request.GET['q']
+        if q:
+            if form.is_valid():
+                results=form.get_queryset()
+                #if results = 0, userMessage = no results returned, please try again
+                userMessage = "Your search has returned %s result" % len(results)
+        else:
+            results=Photo.objects.none()
+            userMessage="You didn’t enter any search criteria. Please enter some terms." # or choose a category."
+
+    else:
+        results=Photo.objects.none()
+        userMessage = None
+    context ={
+        'form':form,
+        'results':results,
+        'userMessage':userMessage,
+        }
+    return render(request, 'shuttabug/search.html',context)

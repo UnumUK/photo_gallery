@@ -26,3 +26,5 @@ urlpatterns = [
     url(r'^photologue/',include('photologue.urls',namespace='photologue')),
     url(r'^shuttabug/', include('shuttabug.urls',namespace='shuttabug')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+urlpatterns +=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

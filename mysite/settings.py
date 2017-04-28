@@ -73,6 +73,8 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -145,5 +147,7 @@ STATICFILES_DIRS = [STATIC_PATH, ]
 
 MEDIA_ROOT = u'/home/mguo290/mysite/media'
 MEDIA_URL ='/media/'
+#i don't want to use photologue in future! MEDIA_URL now inconsistent with form of STATIC_URL
+#how else to use {{MEDIA_URL}} tags? change
 SITE_ID=1
 

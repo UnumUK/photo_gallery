@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^admin/$', admin.site.urls, name ='admin'),
     url(r'^gallerylist/$', myGalleryListView.as_view(), name ='custom-gallery-list'),
     url(r'^news/$',views.news, name ='news'),
+    url(r'^search/$',views.search, name ='search'),
     ]
 
