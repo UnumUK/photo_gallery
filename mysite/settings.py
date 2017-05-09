@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'taggit',
     'shuttabug',
+    'taggit_templatetags2',
 
 ]
 

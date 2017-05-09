@@ -25,6 +25,12 @@ urlpatterns = [
     url(r'^photologue/', include('shuttabug.urls',namespace='shuttabug')),
     url(r'^photologue/',include('photologue.urls',namespace='photologue')),
     url(r'^shuttabug/', include('shuttabug.urls',namespace='shuttabug')),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-urlpatterns +=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+"""
+if not settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+"""
+if settings.DEBUG:
+    ### To test ###
+    urlpatterns +=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
