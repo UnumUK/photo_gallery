@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^gallerylist/$', myGalleryListView.as_view(), name ='custom-gallery-list'),
     url(r'^news/$',views.news, name ='news'),
     url(r'^search/$',views.search, name ='search'),
+    url(r'^upload/$',views.upload_file, name ='upload'),
     ]
 
