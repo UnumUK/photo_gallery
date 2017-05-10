@@ -41,19 +41,28 @@ def search(request):
         if q:
             if form.is_valid():
                 results=set(form.get_queryset())
+
+                similarPhotos =[]
+                for result in results:
+                    similarPhotos.extend(result.extended.tags.similar_objects())
+                similarPhotos = set(similarPhotos)
+
                 # set() - make sure the results are unique.
                 #if results = 0, userMessage = no results returned, please try again
                 userMessage = "Search for %s returns %s result" % (q,len(results))
                 #This should be all in html. rather than view
         else:
+            similarPhotos = None
             results=Photo.objects.none()
             userMessage="You didn’t enter any search criteria. Please enter some term" # or choose a category."
 
     else:
+        similarPhotos = None
         results=Photo.objects.none()
         userMessage = None
     context ={
         'form':form,
+        'similarPhotos': similarPhotos,
         'results':results, # dedupe queries that return lots of the same results. Ideally solve it at query level.
         'userMessage':userMessage,
         }

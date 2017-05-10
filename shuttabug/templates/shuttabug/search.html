@@ -35,6 +35,14 @@
                         <!-- [ f(i) for i in list(i)] -->
                     <br>
 
+                    <p>Related Photos: </p>
+                    <div id='searchTagsList'>
+                        <ul class="list-inline">
+                    {% for photo in similarPhotos %}
+                            <li><a href="">{{photo}}</a></li>
+                    {% endfor %}
+                        </ul>
+                    </div>
                     <p>Related Tags: </p>
 
                     <div class="panel-body">
