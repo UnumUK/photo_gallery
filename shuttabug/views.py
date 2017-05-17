@@ -33,6 +33,25 @@ def upload_file(request):
     context= {'stuff':"Hello World. You are looking are Shuttabug index."}
     return render(request,'shuttabug/upload.html', context)
 
+def photo_detail(request):
+    context= {'stuff':"Hello World. You are looking are Shuttabug index."}
+    return render(request,'shuttabug/photo_detail.html', context)
+
+from django.views.generic.detail import DetailView
+class PhotoDetailView(DetailView):
+    template_name ='shuttabug/photo_detail.html'
+    #queryset = Gallery.objects.on_site().is_public
+    #context = {'object': queryset}
+
+    def get(self, request, photo_name_slug):
+        queryset = Gallery.objects.filter(slug = photo_name_slug).on_site().is_public
+        context = {'object': queryset}
+        return render(request, self.template_name, context)
+
+    def post(self,request, *args, **kwargs):
+        pass
+
+
 @csrf_exempt
 def search(request):
     form = SearchForm(request.GET or {})
