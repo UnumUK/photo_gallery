@@ -21,8 +21,8 @@ from . import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     #overrides default photologue url match.
-    url(r'^$', include('shuttabug.urls',namespace='shuttabug')),
-    url(r'^photologue/', include('shuttabug.urls',namespace='shuttabug')),
+    #url(r'^$', include('shuttabug.urls',namespace='shuttabug')),
+    #url(r'^photologue/', include('shuttabug.urls',namespace='shuttabug')),
     url(r'^photologue/',include('photologue.urls',namespace='photologue')),
     url(r'^shuttabug/', include('shuttabug.urls',namespace='shuttabug')),
 ] +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

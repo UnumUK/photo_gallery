@@ -5,6 +5,7 @@ from django.contrib import admin
 from . import views
 from . views import myGalleryListView
 from . views import PhotoDetailView
+from . views import PhotoListView
 
 urlpatterns = [
     url(r'^$', views.index, name = 'index'),
@@ -13,9 +14,12 @@ urlpatterns = [
     url(r'^news/$',views.news, name ='news'),
     url(r'^search/$',views.search, name ='search'),
     url(r'^upload/$',views.upload_file, name ='upload'),
-    #url(r'^photo/$', views.photo_detail, name ='photo_detail'),
-    url(r'^photo/(?P<photo_name_slug>[\-\d\w]+)/$',
+    url(r'^download_image/', views.download_image, name='download_image'),
+    url(r'^photo/(?P<photo_slug>[\w\-]+)/$',
         PhotoDetailView.as_view(),
-        name='pl-photo'),
-    ]
+        name='photo-detail'),
+    url(r'^photolist/',
+        PhotoListView.as_view(),
+        name='photo-list'),
 
+    ]

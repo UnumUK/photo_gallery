@@ -16,7 +16,7 @@ def index(request):
 
 class myGalleryListView(GalleryListView):
     template_name ='shuttabug/my_gallery_list.html'
-    queryset = Gallery.objects.on_site().is_public #possible redundant if I inherited properly
+    queryset = Gallery.objects.on_site().is_public() #possible redundant if I inherited properly
     context = {'object_list': queryset}
 
     def get(self, request, *args, **kwargs):
@@ -37,18 +37,43 @@ def photo_detail(request):
     context= {'stuff':"Hello World. You are looking are Shuttabug index."}
     return render(request,'shuttabug/photo_detail.html', context)
 
+from django.views.static import serve
+import os
+def download_image(request):
+    """
+    serving image files for download during development
+    """
+    my_data = 'Good job'
+    response = HttpResponse(my_data, content_type='force-download')
+    response['Content-Disposition'] = 'attachment; filename="Example_download.txt"'
+    return response
+
 from django.views.generic.detail import DetailView
+
 class PhotoDetailView(DetailView):
     template_name ='shuttabug/photo_detail.html'
-    #queryset = Gallery.objects.on_site().is_public
-    #context = {'object': queryset}
 
-    def get(self, request, photo_name_slug):
-        queryset = Gallery.objects.filter(slug = photo_name_slug).on_site().is_public
+    def get(self, request, photo_slug):
+        # put all this in a try, except block to serve up a 404 page to people searching by slugs
+        queryset = Photo.objects.on_site().is_public().get(slug = photo_slug)
         context = {'object': queryset}
         return render(request, self.template_name, context)
 
     def post(self,request, *args, **kwargs):
+        pass
+
+from django.views.generic.list import ListView
+class PhotoListView(ListView):
+    template_name ='shuttabug/photo_list.html'
+    queryset = Photo.objects.on_site().is_public() #possible redundant if I inherited properly
+    context = {'object_list': queryset}
+    paginate_by = 20
+
+    def get(self, request):
+        #reverse('myviewname', kwargs={'pk': value})
+        return render(request, self.template_name, self.context)
+
+    def post(self,request):
         pass
 
 

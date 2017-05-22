@@ -1,9 +1,10 @@
 {% extends "templates/photologue/photo_detail.html" %}
+{% load photologue_tags i18n %}
 {% load i18n %}
-{% block title %}{{ object.title }}{% endblock %}
+
 
 {% block content %}
-    <h1>Land of Hope and Glory.</h1>
+
     <div class="row col-lg-12">
         <h1 class="page-header">{{ object.title }}</h1>
         <p class="muted"><small>{% trans "Published" %} {{ object.date_added }}</small></p>
@@ -30,6 +31,10 @@
 				</table>
 			{% endif %}
         </div>
+
+        <div class="col-md-6">
+            {% include 'shuttabug/download_image.html' %}
+        <div/>
     </div>
 
 {% endblock %}
