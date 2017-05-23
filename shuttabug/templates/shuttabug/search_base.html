@@ -2,7 +2,7 @@
 {% load taggit_templatetags2_tags %}
 
 {% block content %}
-{% url 'mysite:shuttabug:search' as search_url %}
+{% url 'shuttabug:search' as search_url %}
     <div class="page-header">
         <h2>Find great images here</h2>
     </div>
@@ -12,7 +12,7 @@
         <div class="panel panel-primary">
             <br/>
 
-            <form class="form-inline" id="search_box" name = "search_box" method="GET" action=".">
+            <form class="form-inline" id="search_box" name = "search_box" method="GET" action="search">
                 <!-- Display the search form elements here -->
                 <input class="form-control" type="text" size="50" name="q" value="" id="query" placeholder = "Search for images here." />
                 <input class="btn btn-primary" type="submit" name="submit" value="Search" />
