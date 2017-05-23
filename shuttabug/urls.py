@@ -6,6 +6,7 @@ from . import views
 from . views import myGalleryListView
 from . views import PhotoDetailView
 from . views import PhotoListView
+from . views import DownLoadImageView
 
 urlpatterns = [
     url(r'^$', views.index, name = 'index'),
@@ -14,7 +15,9 @@ urlpatterns = [
     url(r'^news/$',views.news, name ='news'),
     url(r'^search/$',views.search, name ='search'),
     url(r'^upload/$',views.upload_file, name ='upload'),
-    url(r'^download_image/', views.download_image, name='download_image'),
+    url(r'^download_image/(?P<photo_slug>[\w\-]+)/$',
+        DownLoadImageView.as_view(),
+        name='download_image'),
     url(r'^photo/(?P<photo_slug>[\w\-]+)/$',
         PhotoDetailView.as_view(),
         name='photo-detail'),
