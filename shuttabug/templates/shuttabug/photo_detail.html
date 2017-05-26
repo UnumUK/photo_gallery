@@ -1,7 +1,7 @@
 {% extends "templates/photologue/photo_detail.html" %}
 {% load photologue_tags i18n %}
 {% load i18n %}
-
+{% load custom_tags %}
 
 {% block content %}
 
@@ -33,7 +33,7 @@
         </div>
 
         <div class="col-md-6">
-            {% include 'shuttabug/download_image.html' with photo_slug=object.slug %}
+            {% downloadform photo_slug=object.slug %}
         <div/>
     </div>
 

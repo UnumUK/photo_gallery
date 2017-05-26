@@ -6,7 +6,7 @@ from django.http import FileResponse
 from photologue.views import GalleryListView
 from photologue.models import Photo, Gallery # use extended Gallery model later.
 import os
-from .forms import SearchForm
+from .forms import SearchForm, DownloadImageForm
 
 from django.http import HttpResponseRedirect
 from .forms import UploadFileForm
@@ -62,37 +62,40 @@ class PhotoListView(ListView):
     def post(self,request):
         pass
 
-def download_image(request):
-    """
-    serving image files for download during development
-    """
-    my_data = 'Good job'
-    response = HttpResponse(my_data, content_type='force-download')
-    response['Content-Disposition'] = 'attachment; filename="Example_download.txt"'
-    return response
-
-class DownLoadImageView(DetailView):
+class DownLoadView(DetailView):
     template_name ='shuttabug/download_image.html'
-    def get(self,request,photo_slug):
-        ### Security| Is there a way to do this that doesn't allow users to edit photo_slug in download url.###
-        photo= Photo.objects.on_site().is_public().get(slug = photo_slug)
-        file_path = str(photo.image.file)
-        file_name, file_extension = os.path.splitext(file_path)
-        file_name = file_name.split('/')[-1]
-        response = FileResponse(open(file_path,'rb'))
-        response['content_type']='force-download'
-        response['Content-Disposition'] = 'attachment; filename="%s_download%s"' % (file_name, file_extension)
-        return response
+    def get(self, request):
+        form = DownloadImageForm()
+        context ={'form':form}
+        return render(request, self.template_name, context)
 
     def post(self,request):
-        form = RegisterForm()
+        """ update User app usage statistics when User is implemented. """
         if request.method == "POST":
-            form = RegisterForm(request.POST) #if no files
-        if form.is_valid():
-            pass
-            #do something if form is valid
-        context = {'form': form}
-        return render(request, "template.html", context)
+            form = DownloadImageForm(request.POST)
+            if form.is_valid():
+                selection = request.POST["download_options"]
+                photo_slug = request.POST["photo_slug"]
+                #can cut all this if just pass photo.image.file_path instead of photo.slug in photo details template
+                photo= Photo.objects.on_site().is_public().get(slug = photo_slug )
+                file_path = str(photo.image.file)
+                #### if os.path.exists(file_path): #nice test ####
+                file_name, file_extension = os.path.splitext(file_path)
+                file_name = file_name.split('/')[-1]
+                response = FileResponse(open(file_path,'rb'))
+                response['content_type']='force-download'
+                response['Content-Disposition'] = 'attachment; filename="%s_download%s"' % (file_name, file_extension)
+                return response
+            else:
+                print (form.errors)
+                form = DownloadImageForm()
+                context = {'form':form}
+                # if form is incomplete, need to render an error page rather than just download_image
+        #### this and the GET method is redundant. you can't access 'shuttabug/download_image/' except by request.POST ###
+        #### need to render an error page or redirect ####
+        #### the download template doesn't depend on the view.py function to render. customtags ####
+        return render(request, self.template_name, context)
+
 
 @csrf_exempt
 def search(request):

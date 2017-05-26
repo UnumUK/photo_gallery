@@ -1,11 +1,15 @@
 {% load static %}
 {% block content %}
-    <div class="col-md-6">
-        <p>Download Size Options</p>
-            <ul>
-                <a href="/shuttabug/download_image/{{photo_slug}}"><li>Facebook</li></a>
-                <a href=""><li>LinkedIn</li></a>
-                <a href=""><li>Twitter</li></a>
-            </ul>
-    </div>
+    <form method="POST" class="post-form" action="{% url 'shuttabug:download_image' %}">
+        {% csrf_token %}
+            <p>Image Sizes</p>
+            {% for choice in form.download_options %}
+                <div class="myradio">
+                    {{ choice }}
+                </div>
+            {% endfor %}
+            <input type="hidden" name="photo_slug" value="{{photo_slug}}">
+            <br>
+        <button type="submit" name = "submit" value = "download" class="save btn btn-default" >Download</button>
+    </form>
 {% endblock %}
