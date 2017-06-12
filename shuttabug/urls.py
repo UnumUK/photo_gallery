@@ -6,7 +6,6 @@ from . import views
 from . views import myGalleryListView
 from . views import PhotoDetailView
 from . views import PhotoListView
-from . views import DownLoadImageView
 from . views import DownLoadView
 urlpatterns = [
     url(r'^$', views.index, name = 'index'),
