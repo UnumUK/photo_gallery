@@ -58,7 +58,7 @@
                                             </div>
                                     {% endif %}
                                     <a href="{{result.get_absolute_url}}">
-                                        <img src="{{MEDIA_URL}}{{result.image}}" alt="{{result.caption}}" height="50" width="50">
+                                        <img src="{{ result.get_thumbnail_url }}" class="thumbnail" alt="{{result.title}}">
                                     </a>
                                 </div>
                             {% endfor %}
