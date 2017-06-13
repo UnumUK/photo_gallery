@@ -57,7 +57,7 @@
                                                 </ul>
                                             </div>
                                     {% endif %}
-                                    <a href="{{result.get_absolute_url}}">
+                                    <a href="{% url 'shuttabug:custom-photo-detail' photo_slug=result.slug %}">
                                         <img src="{{ result.get_thumbnail_url }}" class="thumbnail" alt="{{result.title}}">
                                     </a>
                                 </div>
