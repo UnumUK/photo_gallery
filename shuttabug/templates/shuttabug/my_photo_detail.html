@@ -24,7 +24,7 @@
                     {% for gallery in object.public_galleries %}
                         <tr>
                             <td>{% previous_in_gallery object gallery %}</td>
-	                        <td class="text-center"><a href="{{ gallery.get_absolute_url }}">{{ gallery.title }}</a></td>
+	                        <td class="text-center"><a href="{% url 'shuttabug:custom-gallery-detail' gallery_slug=gallery.slug %}">{{ gallery.title }}</a></td>
 	                        <td>{% next_in_gallery object gallery %}</td>
                         </tr>
 					{% endfor %}

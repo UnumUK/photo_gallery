@@ -2,7 +2,7 @@
 {% block content %}
     <form method="POST" class="post-form" action="{% url 'shuttabug:download_image' %}">
         {% csrf_token %}
-            <p>Image Sizes</p>
+            <p>Download Image Sizes</p>
             {% for choice in form.download_options %}
                 <div class="myradio">
                     {{ choice }}

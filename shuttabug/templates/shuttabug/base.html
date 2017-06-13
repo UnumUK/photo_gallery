@@ -41,7 +41,7 @@
 			            Gallery views<b class="caret"></b>
 			        </a>
 					<ul class="dropdown-menu">
-						<li class="sub-page"><a href="{% url 'photologue:gallery-list' %}">List views</a></li>
+						<li class="sub-page"><a href="{% url 'shuttabug:custom-gallery-list' %}">List views</a></li>
 						<li class="sub-page"><a href="{% url 'photologue:pl-gallery-archive' %}">Date views</a></li>
 					</ul>
 				</li>
@@ -50,7 +50,7 @@
 			            Photo views<b class="caret"></b>
 			        </a>
 					<ul class="dropdown-menu">
-                        <li class="sub-page"><a href="/shuttabug/photolist/">List views</a></li>
+                        <li class="sub-page"><a href="{% url 'shuttabug:custom-photo-list' %}">List views</a></li>
 						<li class="sub-page"><a href="{% url 'photologue:pl-photo-archive' %}">Date views</a></li>
 					</ul>
 				</li>

@@ -1,0 +1,22 @@
+{% extends "templates/photologue/gallery_detail.html" %}
+{% load photologue_tags i18n %}
+{% load i18n %}
+{% load custom_tags %}
+
+{% block title %}{{ gallery.title }}{% endblock %}
+
+{% block content %}
+
+	<div class="row col-lg-12">
+        <h1 class="page-header">{{ gallery.title }}</h1>
+        <p class="muted"><small>{% trans "Published" %} {{ gallery.date_added }}</small></p>
+        {% if gallery.description %}{{ gallery.description|safe }}{% endif %}
+	    {% for photo in gallery.public %}
+	        <a href="{% url 'shuttabug:custom-photo-detail' photo_slug=photo.slug %}">
+	             <img src="{{ photo.get_thumbnail_url }}" class="thumbnail" alt="{{ photo.title }}">
+	        </a>
+	    {% endfor %}
+        <div><a href="{% url 'shuttabug:custom-gallery-list' %}" class="btn btn-default">{% trans "View all galleries" %}</a></div>
+	</div>
+
+{% endblock %}

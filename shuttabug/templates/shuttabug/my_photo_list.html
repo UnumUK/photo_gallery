@@ -10,7 +10,7 @@
 	{% if object_list %}
 		<div class="row col-lg-12">
             {% for photo in object_list %}
-		        <a href="{% url 'shuttabug:photo-detail' photo_slug=photo.slug %}">
+		        <a href="{% url 'shuttabug:custom-photo-detail' photo_slug=photo.slug %}">
 		             <img src="{{ photo.get_thumbnail_url }}" class="thumbnail" alt="{{ photo.title }}">
 		        </a>
 		    {% endfor %}

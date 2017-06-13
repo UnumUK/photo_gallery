@@ -3,7 +3,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.http import FileResponse
-from photologue.views import GalleryListView
+from photologue.views import GalleryListView, GalleryDetailView
 from photologue.models import Photo, Gallery # use extended Gallery model later.
 import os
 from .forms import SearchForm, DownloadImageForm
@@ -20,11 +20,21 @@ class myGalleryListView(GalleryListView):
     template_name ='shuttabug/my_gallery_list.html'
     queryset = Gallery.objects.on_site().is_public() #possible redundant if I inherited properly
     context = {'object_list': queryset}
-
-    def get(self, request, *args, **kwargs):
+    paginate_by = 20
+    def get(self, request):
         return render(request, self.template_name, self.context)
 
-    def post(self,request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
+        pass
+
+class myGalleryDetailView(GalleryDetailView):
+    template_name ='shuttabug/my_gallery_detail.html'
+
+    def get(self,request, gallery_slug):
+        queryset=Gallery.objects.on_site().is_public().get(slug = gallery_slug)
+        context ={'gallery': queryset}
+        return render(request, self.template_name, context)
+    def post(self, request):
         pass
 
 def news(request):
@@ -37,8 +47,8 @@ def upload_file(request):
 
 from django.views.generic.detail import DetailView
 
-class PhotoDetailView(DetailView):
-    template_name ='shuttabug/photo_detail.html'
+class myPhotoDetailView(DetailView):
+    template_name ='shuttabug/my_photo_detail.html'
 
     def get(self, request, photo_slug):
         # put all this in a try, except block to serve up a 404 page to people searching by slugs
@@ -50,8 +60,8 @@ class PhotoDetailView(DetailView):
         pass
 
 from django.views.generic.list import ListView
-class PhotoListView(ListView):
-    template_name ='shuttabug/photo_list.html'
+class myPhotoListView(ListView):
+    template_name ='shuttabug/my_photo_list.html'
     queryset = Photo.objects.on_site().is_public() #possible redundant if I inherited properly
     context = {'object_list': queryset}
     paginate_by = 20
@@ -95,7 +105,18 @@ class DownLoadView(DetailView):
         #### need to render an error page or redirect ####
         #### the download template doesn't depend on the view.py function to render. customtags ####
         return render(request, self.template_name, context)
-
+import json
+def jsonTesting(request):
+    template_name = 'json_test.html'
+    data ={}
+    if request.method =='POST':
+        data = json.loads(request.text)
+        email = data['email']
+        context ={'data':data}
+        return render(request, template_name, context)
+    else:
+        context ={'data':data}
+        return render(request, template_name, context)
 
 @csrf_exempt
 def search(request):
