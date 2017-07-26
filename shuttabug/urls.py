@@ -34,8 +34,6 @@ urlpatterns = [
     url(r'^gallerylist/$',
         myGalleryListView.as_view(),
         name ='custom-gallery-list'),
-
-    url('^argonauts/$',views.jsonTesting, name='hubspot'),
     ]
 """
     url(r'^download_image/(?P<photo_slug>[\w\-]+)/$',
