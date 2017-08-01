@@ -1,9 +1,12 @@
 from django.shortcuts import render, render_to_response
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic.list import ListView
+from django.views.generic.dates import ArchiveIndexView, DateDetailView, DayArchiveView, MonthArchiveView, YearArchiveView
 from django.http import HttpResponse
 from django.http import FileResponse
-from photologue.views import GalleryListView, GalleryDetailView
+from photologue.views import GalleryListView, GalleryDetailView,GalleryDateView,PhotoDateView
+#from photologue.views import PhotoDateDetailView, PhotoDateDetailView, PhotoMonthArchiveView, PhotoYearArchiveView
 from photologue.models import Photo, Gallery # use extended Gallery model later.
 import os
 from .forms import SearchForm, DownloadImageForm
@@ -37,6 +40,25 @@ class myGalleryDetailView(GalleryDetailView):
     def post(self, request):
         pass
 
+class myGalleryDateDetailView(GalleryDateView, DateDetailView):
+    template_name = 'shuttabug/my_photo_archive.html'#???
+
+class myGalleryArchiveIndexView(GalleryDateView, ArchiveIndexView):
+    template_name = 'shuttabug/my_gallery_archive.html'
+
+
+class myGalleryDayArchiveView(GalleryDateView, DayArchiveView):
+    template_name = 'shuttabug/my_gallery_archive_day.html'
+
+
+class myGalleryMonthArchiveView(GalleryDateView, MonthArchiveView):
+    template_name = 'shuttabug/my_gallery_archive_month.html'
+
+
+class myGalleryYearArchiveView(GalleryDateView, YearArchiveView):
+    make_object_list = True
+    template_name = 'shuttabug/my_gallery_archive_year.html'
+
 def news(request):
     context= {'stuff':"Hello World. You are looking are Shuttabug index."}
     return render(request,'shuttabug/news.html', context)
@@ -51,7 +73,7 @@ class myPhotoDetailView(DetailView):
     template_name ='shuttabug/my_photo_detail.html'
 
     def get(self, request, photo_slug):
-        # put all this in a try, except block to serve up a 404 page to people searching by slugs
+        # put all this in a try, except block to serve up a 404 page to people searching by slugs that do not exist
         queryset = Photo.objects.on_site().is_public().get(slug = photo_slug)
         context = {'object': queryset}
         return render(request, self.template_name, context)
@@ -59,7 +81,6 @@ class myPhotoDetailView(DetailView):
     def post(self,request, *args, **kwargs):
         pass
 
-from django.views.generic.list import ListView
 class myPhotoListView(ListView):
     template_name ='shuttabug/my_photo_list.html'
     queryset = Photo.objects.on_site().is_public() #possible redundant if I inherited properly
@@ -69,8 +90,24 @@ class myPhotoListView(ListView):
     def get(self, request):
         return render(request, self.template_name, self.context)
 
-    def post(self,request):
-        pass
+class myPhotoArchiveIndexView(PhotoDateView, ArchiveIndexView):
+    template_name='shuttabug/my_photo_archive.html'
+
+class myPhotoDateDetailView(PhotoDateView,DateDetailView):
+    # redundant, have used photodetailview in urls.
+    template_name='shuttabug/my_photo_date_detail.html'
+
+class myPhotoDayArchiveView(PhotoDateView, DayArchiveView):
+    template_name='shuttabug/my_photo_archive_day.html'
+
+class myPhotoMonthArchiveView(PhotoDateView, MonthArchiveView):
+    template_name='shuttabug/my_photo_archive_month.html'
+
+class myPhotoYearArchiveView(PhotoDateView, YearArchiveView):
+    make_object_list = True
+    template_name='shuttabug/my_photo_archive_year.html'
+
+
 
 class DownLoadView(DetailView):
     template_name ='shuttabug/download_image.html'

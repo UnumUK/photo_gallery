@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{# Display a randomnly-selected set of photos from a given gallery #}
+
+<div>
+    
+    <h2><a href="{% url 'shuttabug:custom-gallery-detail' gallery_slug=gallery.slug %}">{{ gallery.title }}</a></h2>
+    <p class="muted"><small>{% trans "Published" %} {{ gallery.date_added }}</small></p>
+    {% if gallery.description %}<p>{{ gallery.description|safe }}</p>{% endif %}
+    
+    {% for photo in gallery.sample %}
+        <a href="{% url 'shuttabug:custom-photo-detail' photo_slug=photo.slug %}">
+             <img src="{{ photo.get_thumbnail_url }}" class="thumbnail" alt="{{ photo.title }}">
+        </a>
+	{% endfor %}
+
+</div>
