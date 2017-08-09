@@ -9,9 +9,14 @@
 
 	{% if object_list %}
 		<div class="row col-lg-12">
-            {% for photo in object_list %}
-		        <a href="{% url 'shuttabug:custom-photo-detail' photo_slug=photo.slug %}" data-lightbox="photolist">
-		             <img src="{{ photo.get_thumbnail_url }}" class="thumbnail" alt="{{ photo.title }}">
+            {% for object in object_list %}
+                <!--
+		        <a href="{% url 'shuttabug:custom-photo-detail' photo_slug=object.slug %}">
+		             <img src="{{ object.get_thumbnail_url }}" class="thumbnail" alt="{{ object.title }}">
+		        </a>
+		        -->
+		        <a href="{{ object.image.url }}" data-lightbox="{{object.slug}}" data-title="{{object.caption}}">
+		            <img src="{{ object.get_thumbnail_url }}" class="thumbnail" alt="{{ object.title }}">
 		        </a>
 		    {% endfor %}
 

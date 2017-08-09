@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-6">
 		    {% if object.caption %}<p>{{ object.caption|safe }}</p>{% endif %}
-		    <a href="{{ object.image.url }}">
+		    <a href="{{ object.image.url }}" data-lightbox="{{object.slug}}" data-title="{{object.caption}}">
 		        <img src="{{ object.get_display_url }}" class="thumbnail" alt="{{ object.title }}">
 		    </a>
         </div>
